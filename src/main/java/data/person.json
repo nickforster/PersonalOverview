@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "Nick",
+    "lastName": "Camenisch",
+    "imagePath": "../images/nickCamenisch.jpg",
+    "departmentId": 0,
+    "functionId": 0,
+    "teamsIds": [0, 2]
+  },
+  {
+    "firstName": "Nick",
+    "lastName": "Forster",
+    "imagePath": "../images/nickForster.jpg",
+    "departmentId": 0,
+    "functionId": 1,
+    "teamsIds": [1, 0]
+  },
+  {
+    "firstName": "Francisi",
+    "lastName": "Feroldo",
+    "imagePath": "../images/kek.jpg",
+    "departmentId": 0,
+    "functionId": 2,
+    "teamsIds": [0]
+  }
+]
