@@ -173,6 +173,11 @@ public class DataHandler {
         writeDepartment();
     }
 
+    public void editDepartment(int index, String designation) {
+        departments.set(index, new Department(designation));
+        writeDepartment();
+    }
+
     public void writeFunction() {
         JSONArray jsonArray = new JSONArray();
 
@@ -197,6 +202,11 @@ public class DataHandler {
         writeFunction();
     }
 
+    public void editFunction(int index, String designation) {
+        functions.set(index, new Function(designation));
+        writeFunction();
+    }
+
     public void writeTeam() {
         JSONArray jsonArray = new JSONArray();
 
@@ -218,6 +228,11 @@ public class DataHandler {
 
     public void addTeam(String designation) {
         teams.add(new Team(designation));
+        writeTeam();
+    }
+
+    public void editTeam(int index, String designation) {
+        teams.set(index, new Team(designation));
         writeTeam();
     }
 
@@ -251,6 +266,11 @@ public class DataHandler {
 
     public void addPerson(String firstName, String lastName, long departmentId, long functionId, long[] teamsIds) {
         persons.add(new Person(firstName, lastName, "", functionId, departmentId, teamsIds));
+        writePerson();
+    }
+
+    public void editPerson(int index, String firstName, String lastName, long departmentId, long functionId, long[] teamsIds) {
+        persons.set(index, new Person(firstName, lastName, "", functionId, departmentId, teamsIds));
         writePerson();
     }
 }
