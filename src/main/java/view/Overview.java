@@ -7,6 +7,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Overview extends JFrame {
     JTextField searchField = new JTextField(20);
@@ -26,11 +28,9 @@ public class Overview extends JFrame {
     JLabel functionLabel = new JLabel("Funkton: ");
     JLabel departmentLabel = new JLabel("Abteilung: ");
     JLabel teamLabel = new JLabel("Teams: ");
-    JLabel imageLabel = new JLabel("Image: ");
     JLabel hrPersonLabel = new JLabel("HR-Person: ");
     JLabel adminLabel = new JLabel("Admin: ");
 
-    JFileChooser imageChooser = new JFileChooser();
     JTextField firstNameTextField = new JTextField(20);
     JTextField lastNameTextField = new JTextField(20);
     JComboBox functionComboBox;
@@ -44,9 +44,6 @@ public class Overview extends JFrame {
     //Third Tab
     JPanel inputPanel = new JPanel(new GridBagLayout());
     JPanel masterDatePanel = new JPanel(new BorderLayout());
-    JComboBox departmentCombobox;
-    JComboBox functionCombobox;
-    JComboBox teamList;
     JButton addBtnDepartment = new JButton("Add");
     JButton editBtnDepartment = new JButton("Edit");
     JButton deleteBtnDepartment = new JButton("Delete");
@@ -196,15 +193,15 @@ public class Overview extends JFrame {
                 departmentBtnPanel.add(addBtnDepartment);
                 departmentBtnPanel.add(editBtnDepartment);
                 departmentBtnPanel.add(deleteBtnDepartment);
-                departmentCombobox = new JComboBox(departments);
-                departmentInputPanel.add(departmentCombobox,BorderLayout.NORTH);
+                departmentComboBox = new JComboBox(departments);
+                departmentInputPanel.add(departmentComboBox,BorderLayout.NORTH);
                 departmentInputPanel.add(departmentBtnPanel,BorderLayout.CENTER);
 
                 functionBtnPanel.add(addBtnFunction);
                 functionBtnPanel.add(editBtnFunction);
                 functionBtnPanel.add(deleteBtnFunction);
-                functionCombobox = new JComboBox(functions);
-                functionInputPanel.add(functionCombobox,BorderLayout.NORTH);
+                functionComboBox = new JComboBox(functions);
+                functionInputPanel.add(functionComboBox,BorderLayout.NORTH);
                 functionInputPanel.add(functionBtnPanel,BorderLayout.CENTER);
 
                 teamBtnPanel.add(addBtnTeam);
@@ -268,6 +265,43 @@ public class Overview extends JFrame {
                 }
             }
         });
+        addBtnDepartment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Department");
+            }
+        });
+        addBtnFunction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Function");
+            }
+        });
+        addBtnTeam.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Team");
+            }
+        });
+        editBtnDepartment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Department",departmentComboBox.getSelectedItem().toString());
+            }
+        });
+        editBtnFunction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Function",functionComboBox.getSelectedItem().toString());
+            }
+        });
+        editBtnTeam.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MasterData("Department",teamCombobox.getSelectedItem().toString());
+            }
+        });
+
     }
 
 
