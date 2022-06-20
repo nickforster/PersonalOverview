@@ -2,23 +2,26 @@
   {
     "firstName": "Nick",
     "lastName": "Camenisch",
-    "imagePath": "../images/nickCamenisch.jpg",
+    "password": "Nick",
+    "permission": "admin",
     "departmentId": 0,
     "functionId": 0,
-    "teamsIds": [0, 2]
+    "teamsIds": [2]
   },
   {
     "firstName": "Nick",
     "lastName": "Forster",
-    "imagePath": "../images/nickForster.jpg",
+    "password": "Nick",
+    "permission": "hrPerson",
     "departmentId": 0,
     "functionId": 1,
-    "teamsIds": [1, 0]
+    "teamsIds": [1]
   },
   {
     "firstName": "Francisi",
     "lastName": "Feroldo",
-    "imagePath": "../images/kek.jpg",
+    "password": "Francisi",
+    "permission": "person",
     "departmentId": 0,
     "functionId": 2,
     "teamsIds": [0]

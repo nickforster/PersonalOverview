@@ -29,8 +29,7 @@ public class DataHandler {
         for (Person person : persons) {
             System.out.println(
                     person.getFirstName() + " " +
-                            person.getLastName() + " " +
-                            person.getImagePath()
+                            person.getLastName()
             );
 
             System.out.println(person.getDepartment().getDesignation());
@@ -90,7 +89,8 @@ public class DataHandler {
     private void parsePersonObject(JSONObject person) {
         String firstName = (String) person.get("firstName");
         String lastName = (String) person.get("lastName");
-        String imagePath = (String) person.get("imagePath");
+        String password = (String) person.get("password");
+        String permission = (String) person.get("permission");
         long functionId = (long) person.get("functionId");
         long departmentId = (long) person.get("departmentId");
 
@@ -100,7 +100,7 @@ public class DataHandler {
             teamsIds[i] = (long) teamsIdsJsonArray.get(i);
         }
 
-        persons.add(new Person(firstName, lastName, imagePath, functionId, departmentId, teamsIds));
+        persons.add(new Person(firstName, lastName, password, permission, functionId, departmentId, teamsIds));
     }
 
     /**
@@ -259,7 +259,8 @@ public class DataHandler {
             JSONArray jsonArray1 = new JSONArray();
             jsonObject.put("firstName", person.getFirstName());
             jsonObject.put("lastName", person.getLastName());
-            jsonObject.put("imagePath", person.getImagePath());
+            jsonObject.put("password", person.getPassword());
+            jsonObject.put("permission", person.getPermission());
             jsonObject.put("departmentId", person.getDepartmentId());
             jsonObject.put("functionId", person.getDepartmentId());
             for (int i = 0; i < person.getTeamsIds().length; i++) {
@@ -279,18 +280,29 @@ public class DataHandler {
         }
     }
 
-    public void addPerson(String firstName, String lastName, long departmentId, long functionId, long[] teamsIds) {
-        persons.add(new Person(firstName, lastName, "", functionId, departmentId, teamsIds));
+    public void addPerson(String firstName, String lastName, String password, String permission, long departmentId, long functionId, long[] teamsIds) {
+        persons.add(new Person(firstName, lastName, password, permission, functionId, departmentId, teamsIds));
         writePerson();
     }
 
-    public void editPerson(int index, String firstName, String lastName, long departmentId, long functionId, long[] teamsIds) {
-        persons.set(index, new Person(firstName, lastName, "", functionId, departmentId, teamsIds));
+    public void editPerson(int index, String firstName, String lastName, String password, String permission, long departmentId, long functionId, long[] teamsIds) {
+        persons.set(index, new Person(firstName, lastName, password, permission, functionId, departmentId, teamsIds));
         writePerson();
     }
 
     public void removePerson(int index) {
         persons.remove(index);
         writePerson();
+    }
+
+    public Person login(String firstLastName, String password) {
+        Person returnPerson = null;
+        for (Person person : persons) {
+            if (person.getFirstLastName().equals(firstLastName) &&
+                    person.getPassword().equals(password)){
+;               returnPerson = person;
+            }
+        }
+        return returnPerson;
     }
 }

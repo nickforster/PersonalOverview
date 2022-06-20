@@ -7,7 +7,8 @@ public class Person {
 
     private String firstName;
     private String lastName;
-    private String imagePath;
+    private String password;
+    private String permission;
 
     private List<Team> teams;
     private Department department;
@@ -19,14 +20,16 @@ public class Person {
 
     public Person(String firstName,
                   String lastName,
-                  String imagePath,
+                  String password,
+                  String permission,
                   long functionId,
                   long departmentId,
                   long[] teamsIds) {
         teams = new ArrayList<>();
         setFirstName(firstName);
         setLastName(lastName);
-        setImagePath(imagePath);
+        setPassword(password);
+        setPermission(permission);
         setFunctionById(functionId);
         setDepartmentById(departmentId);
         setTeamsByIds(teamsIds);
@@ -66,14 +69,6 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
     }
 
     public List<Team> getTeams() {
@@ -122,5 +117,25 @@ public class Person {
 
     public void setTeamsIds(long[] teamsIds) {
         this.teamsIds = teamsIds;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public String getFirstLastName() {
+        return firstName + "." + lastName;
     }
 }
