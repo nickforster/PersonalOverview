@@ -6,7 +6,6 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.*;
 
 public class DataHandler {
@@ -342,5 +341,21 @@ public class DataHandler {
 
     public String getLog() {
         return log;
+    }
+
+    public static List<Person> getPersons() {
+        return persons;
+    }
+
+    public static List<Department> getDepartments() {
+        return departments;
+    }
+
+    public static List<Team> getTeams() {
+        return teams;
+    }
+
+    public static List<Function> getFunctions() {
+        return functions;
     }
 }
