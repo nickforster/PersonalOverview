@@ -8,19 +8,50 @@ import java.io.FileReader;
 import java.util.*;
 
 public class DataHandler {
-    private final List<Person> persons = new ArrayList<>();
-    private static List<Department> departments = null;
-    private static List<Team> teams = null;
-    private static List<Function> functions = null;
+    private static List<Person> persons;
+    private static List<Department> departments;
+    private static List<Team> teams;
+    private static List<Function> functions;
 
     JSONParser jsonParser = new JSONParser();
 
     public DataHandler() {
-        //persons = new ArrayList<>();
+        persons = new ArrayList<>();
         departments = new ArrayList<>();
         teams = new ArrayList<>();
         functions = new ArrayList<>();
 
+        readData();
+
+        listData();
+    }
+
+    private void listData() {
+        for (Person person : persons) {
+            System.out.println(
+                    person.getFirstName() + " " +
+                            person.getLastName() + " " +
+                            person.getImagePath()
+            );
+
+            System.out.println(person.getDepartment().getDesignation());
+            System.out.println(person.getFunction().getDesignation());
+            for (int i = 0; i < person.getTeams().size(); i++) {
+                System.out.println(person.getTeams().get(i).getDesignation());
+            }
+        }
+        for (Department department : departments) {
+            System.out.println(department.getDesignation());
+        }
+        for (Team team : teams) {
+            System.out.println(team.getDesignation());
+        }
+        for (Function function : functions) {
+            System.out.println(function.getDesignation());
+        }
+    }
+
+    private void readData() {
         try {
             //Read JSON file of employees
             FileReader readPersons = new FileReader("src/main/java/data/person.json");
@@ -50,30 +81,7 @@ public class DataHandler {
             throw new RuntimeException(e);
         }
 
-        for (Person person : persons) {
-            System.out.println(
-               person.getFirstName() + " " +
-               person.getLastName() + " " +
-               person.getImagePath()
-            );
-
-            System.out.println(person.getDepartment().getDesignation());
-            System.out.println(person.getFunction().getDesignation());
-            for (int i = 0; i < person.getTeams().size(); i++) {
-                System.out.println(person.getTeams().get(i).getDesignation());
-            }
-        }
-        for (Department department : departments) {
-            System.out.println(department.getDesignation());
-        }
-        for (Team team : teams) {
-            System.out.println(team.getDesignation());
-        }
-        for (Function function : functions) {
-            System.out.println(function.getDesignation());
-        }
     }
-
 
     /**
      * This method is used to parse an JSONObject to an Person object.
@@ -122,12 +130,9 @@ public class DataHandler {
         functions.add(new Function(designation));
     }
 
-
     public static Function getFunction(long index) {
-        System.out.println(index);
         return functions.get((int)index);
     }
-
 
     public static Department getDepartment(long index) {
         return departments.get((int)index);
@@ -140,9 +145,4 @@ public class DataHandler {
         }
         return returnTeam;
     }
-
-
-
-
-
 }

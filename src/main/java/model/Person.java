@@ -13,6 +13,12 @@ public class Person {
     private Department department;
     private Function function;
 
+    private long functionId;
+    private long departmentId;
+    private long[] teamsIds;
+
+    private static DataHandler dataHandler = new DataHandler();
+
     public Person(String firstName,
                   String lastName,
                   String imagePath,
@@ -31,11 +37,13 @@ public class Person {
     private void setFunctionById(long functionId) {
         Function function = DataHandler.getFunction(functionId);
         setFunction(new Function(function.getDesignation()));
+        setFunctionId(functionId);
     }
 
     private void setDepartmentById(long departmentId) {
         Department department = DataHandler.getDepartment(departmentId);
         setDepartment(new Department(department.getDesignation()));
+        setDepartmentId(departmentId);
     }
 
     private void setTeamsByIds(long[] teamsIds) {
@@ -43,6 +51,7 @@ public class Person {
         for (Team team : teamsList) {
             teams.add(new Team(team.getDesignation()));
         }
+        setTeamsIds(teamsIds);
     }
 
     public String getFirstName() {
@@ -91,5 +100,29 @@ public class Person {
 
     public void setFunction(Function function) {
         this.function = function;
+    }
+
+    public long getFunctionId() {
+        return functionId;
+    }
+
+    public void setFunctionId(long functionId) {
+        this.functionId = functionId;
+    }
+
+    public long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public long[] getTeamsIds() {
+        return teamsIds;
+    }
+
+    public void setTeamsIds(long[] teamsIds) {
+        this.teamsIds = teamsIds;
     }
 }
