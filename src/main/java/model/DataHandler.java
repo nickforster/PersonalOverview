@@ -27,7 +27,6 @@ public class DataHandler {
 
         readData();
 
-        addLog("your message");
     }
 
     private void listData() {
@@ -330,8 +329,8 @@ public class DataHandler {
     }
 
     public void addLog(String newLog) {
-        currentUser = persons.get(0);
-        log += "[" + new Timestamp(System.currentTimeMillis()) + "] <" + currentUser.getFirstLastName() + "> " + newLog;
+        log += "[" + new Timestamp(System.currentTimeMillis()) + "] " +
+                "<" + currentUser.getFirstLastName() + "> " + newLog;
         try {
             FileWriter myWriter = new FileWriter("src/main/java/data/log.txt");
             myWriter.write(log);
