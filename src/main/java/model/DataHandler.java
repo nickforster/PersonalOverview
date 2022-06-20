@@ -4,8 +4,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.*;
 
 public class DataHandler {
@@ -13,6 +14,8 @@ public class DataHandler {
     private static List<Department> departments;
     private static List<Team> teams;
     private static List<Function> functions;
+    private static String log;
+    private static Person currentUser;
 
     JSONParser jsonParser = new JSONParser();
 
@@ -23,6 +26,8 @@ public class DataHandler {
         functions = new ArrayList<>();
 
         readData();
+
+        addLog("your message");
     }
 
     private void listData() {
@@ -79,6 +84,7 @@ public class DataHandler {
             throw new RuntimeException(e);
         }
 
+        readLog();
     }
 
     /**
@@ -299,10 +305,43 @@ public class DataHandler {
         Person returnPerson = null;
         for (Person person : persons) {
             if (person.getFirstLastName().equals(firstLastName) &&
-                    person.getPassword().equals(password)){
-;               returnPerson = person;
+                    person.getPassword().equals(password)) {
+                returnPerson = person;
+                currentUser = person;
             }
         }
         return returnPerson;
+    }
+
+    public void readLog() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/data/log.txt"))) {
+            String line = br.readLine();
+            while (line != null) {
+                if (log == null) {
+                    log = line + "\n";
+                } else {
+                    log += line + "\n";
+                }
+                line = br.readLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addLog(String newLog) {
+        currentUser = persons.get(0);
+        log += "[" + new Timestamp(System.currentTimeMillis()) + "] <" + currentUser.getFirstLastName() + "> " + newLog;
+        try {
+            FileWriter myWriter = new FileWriter("src/main/java/data/log.txt");
+            myWriter.write(log);
+            myWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getLog() {
+        return log;
     }
 }
