@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.*;
 
 public class DataHandler {
@@ -22,8 +23,6 @@ public class DataHandler {
         functions = new ArrayList<>();
 
         readData();
-
-        listData();
     }
 
     private void listData() {
@@ -85,6 +84,7 @@ public class DataHandler {
 
     /**
      * This method is used to parse an JSONObject to an Person object.
+     *
      * @param person JSONObject
      */
     private void parsePersonObject(JSONObject person) {
@@ -105,6 +105,7 @@ public class DataHandler {
 
     /**
      * This method is used to parse an JSONObject to an Department object.
+     *
      * @param department JSONObject
      */
     private void parseDepartmentObject(JSONObject department) {
@@ -114,6 +115,7 @@ public class DataHandler {
 
     /**
      * This method is used to parse an JSONObject to an Team object.
+     *
      * @param team JSONObject
      */
     private void parseTeamObject(JSONObject team) {
@@ -123,6 +125,7 @@ public class DataHandler {
 
     /**
      * This method is used to parse an JSONObject to an Function object.
+     *
      * @param function JSONObject
      */
     private void parseFunctionObject(JSONObject function) {
@@ -131,18 +134,123 @@ public class DataHandler {
     }
 
     public static Function getFunction(long index) {
-        return functions.get((int)index);
+        return functions.get((int) index);
     }
 
     public static Department getDepartment(long index) {
-        return departments.get((int)index);
+        return departments.get((int) index);
     }
 
     public static Team[] getTeams(long[] index) {
         Team[] returnTeam = new Team[index.length];
         for (int i = 0; i < index.length; i++) {
-            returnTeam[i] = teams.get((int)index[i]);
+            returnTeam[i] = teams.get((int) index[i]);
         }
         return returnTeam;
+    }
+
+    public void writeDepartment() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Department department : departments) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("designation", department.getDesignation());
+            jsonArray.add(jsonObject);
+        }
+
+        System.out.println(jsonArray);
+
+        try (FileWriter file = new FileWriter("src/main/java/data/department.json")) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addDepartment(String designation) {
+        departments.add(new Department(designation));
+        writeDepartment();
+    }
+
+    public void writeFunction() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Function function : functions) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("designation", function.getDesignation());
+            jsonArray.add(jsonObject);
+        }
+
+        System.out.println(jsonArray);
+
+        try (FileWriter file = new FileWriter("src/main/java/data/function.json")) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addFunction(String designation) {
+        functions.add(new Function(designation));
+        writeFunction();
+    }
+
+    public void writeTeam() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Team team : teams) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("designation", team.getDesignation());
+            jsonArray.add(jsonObject);
+        }
+
+        System.out.println(jsonArray);
+
+        try (FileWriter file = new FileWriter("src/main/java/data/team.json")) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addTeam(String designation) {
+        teams.add(new Team(designation));
+        writeTeam();
+    }
+
+    public void writePerson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Person person : persons) {
+            JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray1 = new JSONArray();
+            jsonObject.put("firstName", person.getFirstName());
+            jsonObject.put("lastName", person.getLastName());
+            jsonObject.put("imagePath", person.getImagePath());
+            jsonObject.put("departmentId", person.getDepartmentId());
+            jsonObject.put("functionId", person.getDepartmentId());
+            for (int i = 0; i < person.getTeamsIds().length; i++) {
+                jsonArray1.add(person.getTeamsIds()[i]);
+            }
+            jsonObject.put("teamsIds", jsonArray1);
+            jsonArray.add(jsonObject);
+        }
+
+        System.out.println(jsonArray);
+
+        try (FileWriter file = new FileWriter("src/main/java/data/person.json")) {
+            file.write(jsonArray.toJSONString());
+            file.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addPerson(String firstName, String lastName, long departmentId, long functionId, long[] teamsIds) {
+        persons.add(new Person(firstName, lastName, "", functionId, departmentId, teamsIds));
+        writePerson();
     }
 }

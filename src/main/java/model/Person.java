@@ -17,8 +17,6 @@ public class Person {
     private long departmentId;
     private long[] teamsIds;
 
-    private static DataHandler dataHandler = new DataHandler();
-
     public Person(String firstName,
                   String lastName,
                   String imagePath,
