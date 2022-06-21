@@ -13,9 +13,9 @@ import java.awt.event.ActionListener;
 public class Overview extends JFrame {
     JTextField searchField = new JTextField(20);
     String[] filterContent = {"Vorname", "Nachname"};
-    JComboBox  filter = new JComboBox(filterContent);
+    JComboBox filter = new JComboBox(filterContent);
     String[][] data;
-    String[] column = {"Vorname","Nachname","Funktion","Abteilung","Team", "Berechtigung"};
+    String[] column = {"Vorname", "Nachname", "Funktion", "Abteilung", "Team", "Berechtigung"};
     JTable userList;
     JScrollPane scrollPane;
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -47,19 +47,19 @@ public class Overview extends JFrame {
     JButton addBtnDepartment = new JButton("Add");
     JButton editBtnDepartment = new JButton("Edit");
     JButton deleteBtnDepartment = new JButton("Delete");
-    JPanel departmentBtnPanel = new JPanel(new GridLayout(1,3));
+    JPanel departmentBtnPanel = new JPanel(new GridLayout(1, 3));
     JPanel departmentInputPanel = new JPanel(new BorderLayout());
 
     JButton addBtnFunction = new JButton("Add");
     JButton editBtnFunction = new JButton("Edit");
     JButton deleteBtnFunction = new JButton("Delete");
-    JPanel functionBtnPanel = new JPanel(new GridLayout(1,3));
+    JPanel functionBtnPanel = new JPanel(new GridLayout(1, 3));
     JPanel functionInputPanel = new JPanel(new BorderLayout());
 
     JButton addBtnTeam = new JButton("Add");
     JButton editBtnTeam = new JButton("Edit");
     JButton deleteBtnTeam = new JButton("Delete");
-    JPanel teamBtnPanel = new JPanel(new GridLayout(1,3));
+    JPanel teamBtnPanel = new JPanel(new GridLayout(1, 3));
     JPanel teamInputPanel = new JPanel(new BorderLayout());
 
 
@@ -71,11 +71,11 @@ public class Overview extends JFrame {
     JPanel logPanel = new JPanel(new BorderLayout());
 
     JPanel createPersonPanel = new JPanel(new BorderLayout());
-    JTextArea logTextArea = new JTextArea(50,100);
+    JTextArea logTextArea = new JTextArea(50, 100);
 
     DataHandler dataHandler = new DataHandler();
 
-    public Overview(int state){
+    public Overview(int state) {
         int personCnt = dataHandler.getPersons().size();
         System.out.println(personCnt);
         data = new String[personCnt][6];
@@ -85,32 +85,33 @@ public class Overview extends JFrame {
             data[i][1] = dataHandler.getPersons().get(i).getLastName();
             data[i][2] = dataHandler.getPersons().get(i).getFunction().getDesignation();
             data[i][3] = dataHandler.getPersons().get(i).getDepartment().getDesignation();
-            data[i][4] = dataHandler.getTeams().get(i).getDesignation();
+            data[i][4] = dataHandler.getPersons().get(i).getTeams().get(0).getDesignation();
+            data[i][5] = dataHandler.getPersons().get(i).getPermission();
 
         }
-        userList = new JTable(data,column);
+        userList = new JTable(data, column);
         scrollPane = new JScrollPane(userList);
 
 
         setTitle("SuperTouperFullComputer");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(800,600));
+        setPreferredSize(new Dimension(800, 600));
         setResizable(true);
 
         //First Tab
-        tabbedPane.addTab("Overview",overviewPanel);
-        searchPanel.add(searchField,BorderLayout.WEST);
-        searchPanel.add(filter,BorderLayout.EAST);
-        searchPanel.setBorder(new EmptyBorder(0,0,10,0));
+        tabbedPane.addTab("Overview", overviewPanel);
+        searchPanel.add(searchField, BorderLayout.WEST);
+        searchPanel.add(filter, BorderLayout.EAST);
+        searchPanel.setBorder(new EmptyBorder(0, 0, 10, 0));
 
         listPanel.add(scrollPane);
-        overviewPanel.add(searchPanel,BorderLayout.NORTH);
-        overviewPanel.add(listPanel,BorderLayout.CENTER);
+        overviewPanel.add(searchPanel, BorderLayout.NORTH);
+        overviewPanel.add(listPanel, BorderLayout.CENTER);
 
         GridBagConstraints c = new GridBagConstraints();
         //CreatePerson Tab
-        if((state == 1) || (state == 2)){
-            tabbedPane.addTab("Erfassen",createPersonPanel);
+        if ((state == 1) || (state == 2)) {
+            tabbedPane.addTab("Erfassen", createPersonPanel);
             c.gridx = 0;
             c.gridy = 0;
             formPanel.add(firstNameLabel, c);
@@ -167,12 +168,12 @@ public class Overview extends JFrame {
             teamCombobox = new JComboBox(teams);
             formPanel.add(teamCombobox, c);
 
-            btnPanel.add(saveBtn,BorderLayout.NORTH);
+            btnPanel.add(saveBtn, BorderLayout.NORTH);
 
-            createPersonPanel.add(formPanel,BorderLayout.NORTH);
-            createPersonPanel.add(btnPanel,BorderLayout.CENTER);
+            createPersonPanel.add(formPanel, BorderLayout.NORTH);
+            createPersonPanel.add(btnPanel, BorderLayout.CENTER);
 
-            if(state == 2){
+            if (state == 2) {
                 c.gridx = 0;
                 c.gridy = 5;
                 formPanel.add(hrPersonLabel, c);
@@ -194,22 +195,22 @@ public class Overview extends JFrame {
                 departmentBtnPanel.add(editBtnDepartment);
                 departmentBtnPanel.add(deleteBtnDepartment);
                 departmentComboBox = new JComboBox(departments);
-                departmentInputPanel.add(departmentComboBox,BorderLayout.NORTH);
-                departmentInputPanel.add(departmentBtnPanel,BorderLayout.CENTER);
+                departmentInputPanel.add(departmentComboBox, BorderLayout.NORTH);
+                departmentInputPanel.add(departmentBtnPanel, BorderLayout.CENTER);
 
                 functionBtnPanel.add(addBtnFunction);
                 functionBtnPanel.add(editBtnFunction);
                 functionBtnPanel.add(deleteBtnFunction);
                 functionComboBox = new JComboBox(functions);
-                functionInputPanel.add(functionComboBox,BorderLayout.NORTH);
-                functionInputPanel.add(functionBtnPanel,BorderLayout.CENTER);
+                functionInputPanel.add(functionComboBox, BorderLayout.NORTH);
+                functionInputPanel.add(functionBtnPanel, BorderLayout.CENTER);
 
                 teamBtnPanel.add(addBtnTeam);
                 teamBtnPanel.add(editBtnTeam);
                 teamBtnPanel.add(deleteBtnTeam);
                 teamCombobox = new JComboBox(teams);
-                teamInputPanel.add(teamCombobox,BorderLayout.NORTH);
-                teamInputPanel.add(teamBtnPanel,BorderLayout.CENTER);
+                teamInputPanel.add(teamCombobox, BorderLayout.NORTH);
+                teamInputPanel.add(teamBtnPanel, BorderLayout.CENTER);
 
                 c.gridx = 0;
                 c.gridy = 0;
@@ -237,7 +238,7 @@ public class Overview extends JFrame {
 
                 masterDatePanel.add(inputPanel, BorderLayout.NORTH);
 
-                tabbedPane.addTab("Log",logPanel);
+                tabbedPane.addTab("Log", logPanel);
                 logTextArea.setText("Logs"); //TO:DO Read Textfile
                 logTextArea.setEditable(false);
                 logPanel.add(logTextArea);
@@ -257,11 +258,11 @@ public class Overview extends JFrame {
                     String firstName = (String) userList.getValueAt(viewRow, 0);
                     String lastName = (String) userList.getValueAt(viewRow, 1);
                     String function = (String) userList.getValueAt(viewRow, 2);
-                    String department = (String) userList.getValueAt(viewRow,3);
+                    String department = (String) userList.getValueAt(viewRow, 3);
                     String teams = (String) userList.getValueAt(viewRow, 4);
                     String permission = (String) userList.getValueAt(viewRow, 5);
                     //String permission = dataHandler.getPersons().get(viewRow).getPermission();
-                    new PopOut(firstName, lastName,function,department,teams,permission,state);
+                    new PopOut(firstName, lastName, function, department, teams, permission, state);
                 }
             }
         });
@@ -286,19 +287,19 @@ public class Overview extends JFrame {
         editBtnDepartment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Department",departmentComboBox.getSelectedItem().toString());
+                new MasterData("Department", departmentComboBox.getSelectedItem().toString());
             }
         });
         editBtnFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Function",functionComboBox.getSelectedItem().toString());
+                new MasterData("Function", functionComboBox.getSelectedItem().toString());
             }
         });
         editBtnTeam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Department",teamCombobox.getSelectedItem().toString());
+                new MasterData("Department", teamCombobox.getSelectedItem().toString());
             }
         });
 

@@ -90,14 +90,13 @@ public class PopOut extends JFrame {
                  labelPanel.add(hrPersonLabel);
                  labelPanel.add(adminLabel);
 
-                 /*
-                 if(permission.equals("Admin")){
+
+                 if(permission.equals("admin")){
                      adminCheckBox.setSelected(true);
                  }
-                 if(permission.equals("HR-Person")){
+                 if(permission.equals("hrPerson")){
                      hrPersonCheckBox.setSelected(true);
                  }
-                  */
 
                  inputPanel.add(hrPersonCheckBox);
                  inputPanel.add(adminCheckBox);
