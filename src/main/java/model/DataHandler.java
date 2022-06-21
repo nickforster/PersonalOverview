@@ -299,7 +299,7 @@ public class DataHandler {
         writePerson();
     }
 
-    public Person login(String firstLastName, String password) {
+    public static Person login(String firstLastName, String password) {
         Person returnPerson = null;
         for (Person person : persons) {
             if (person.getFirstLastName().equals(firstLastName) &&

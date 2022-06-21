@@ -1,5 +1,8 @@
 package view;
 
+import model.DataHandler;
+import model.Person;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -42,22 +45,22 @@ public class Login extends JFrame {
         loginBtn.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                /*
-                Check if password correct, if user is admin, HR-person
-                 */
-                //If User = Admin
-                String pw = new String(passwordField.getPassword());
-                if (pw.equals("1")) {
-                    state = 2;
-                }
-                else if (pw.equals("2")) {
-                    state = 1;
+                DataHandler dataHandler = new DataHandler();
+                Person person = dataHandler.login(userNameField.getText(), new String(passwordField.getPassword()));
+                if (person != null) {
+                    if (person.getPermission().equals("admin")) {
+                        state = 2;
+                    }
+                    else if (person.getPermission().equals("hrPerson")) {
+                        state = 1;
+                    } else {
+                        state = 0;
+                    }
+                    new Overview(state);
+                    setVisible(false);
                 } else {
-                    state = 0;
+                    // show error
                 }
-                new Overview(state);
-                setVisible(false);
-
             }
 
             @Override
