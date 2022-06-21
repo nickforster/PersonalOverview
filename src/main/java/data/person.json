@@ -3,27 +3,27 @@
     "firstName": "Nick",
     "lastName": "Camenisch",
     "password": "Nick",
-    "permission": "admin",
     "departmentId": 0,
     "functionId": 0,
+    "permission": "admin",
     "teamsIds": [2]
   },
   {
     "firstName": "Nick",
     "lastName": "Forster",
     "password": "Nick",
-    "permission": "hrPerson",
+    "functionId": 0,
     "departmentId": 0,
-    "functionId": 1,
+    "permission": "hrPerson",
     "teamsIds": [1]
   },
   {
-    "firstName": "Francisi",
-    "lastName": "Feroldo",
-    "password": "Francisi",
-    "permission": "person",
+    "firstName": "Francesco",
+    "lastName": "Feroldi",
+    "password": "Francesco",
+    "functionId": 0,
     "departmentId": 0,
-    "functionId": 2,
+    "permission": "person",
     "teamsIds": [0]
   }
 ]

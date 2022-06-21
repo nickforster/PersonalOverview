@@ -6,9 +6,12 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 public class Overview extends JFrame {
     JTextField searchField = new JTextField(20);
@@ -80,7 +83,6 @@ public class Overview extends JFrame {
 
     public Overview(int state) {
         int personCnt = dataHandler.getPersons().size();
-        System.out.println(personCnt);
         data = new String[personCnt][6];
 
         for (int i = 0; i < dataHandler.getPersons().size(); i++) {
@@ -265,7 +267,26 @@ public class Overview extends JFrame {
                     String teams = (String) userList.getValueAt(viewRow, 4);
                     String permission = (String) userList.getValueAt(viewRow, 5);
                     //String permission = dataHandler.getPersons().get(viewRow).getPermission();
-                    new PopOut(firstName, lastName, function, department, teams, permission, state);
+                    PopOut popOut = new PopOut(firstName, lastName, function, department, teams, permission, state, viewRow);
+
+                    popOut.addWindowListener(new WindowListener() {
+                        @Override
+                        public void windowOpened(WindowEvent e) {}
+                        @Override
+                        public void windowClosing(WindowEvent e) {}
+                        @Override
+                        public void windowClosed(WindowEvent e) {}
+                        @Override
+                        public void windowIconified(WindowEvent e) {}
+                        @Override
+                        public void windowDeiconified(WindowEvent e) {}
+                        @Override
+                        public void windowActivated(WindowEvent e) {}
+                        @Override
+                        public void windowDeactivated(WindowEvent e) {
+                            updateTableData();
+                        }
+                    });
                 }
             }
         });
@@ -273,59 +294,144 @@ public class Overview extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Department");
-                if (!masterData.isActive()) {
-                    updateDepartmentComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateDepartmentComboBox();
+                    }
+                });
             }
         });
         addBtnFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Function");
-
-                if (!masterData.isActive()) {
-                    updateFunctionComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateFunctionComboBox();
+                    }
+                });
             }
         });
         addBtnTeam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Team");
-
-                if (!masterData.isActive()) {
-                    updateTeamComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateTeamComboBox();
+                    }
+                });
             }
         });
         editBtnDepartment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Department", departmentComboBox.getSelectedItem().toString(), departmentComboBox.getSelectedIndex());
-
-                if (!masterData.isActive()) {
-                    updateDepartmentComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateDepartmentComboBox();
+                    }
+                });
             }
         });
         editBtnFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Function", functionComboBox.getSelectedItem().toString(), functionComboBox.getSelectedIndex());
-
-                if (!masterData.isActive()) {
-                    updateFunctionComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateFunctionComboBox();
+                    }
+                });
             }
         });
         editBtnTeam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MasterData masterData = new MasterData("Team", teamCombobox.getSelectedItem().toString(), teamCombobox.getSelectedIndex());
-
-                if (!masterData.isActive()) {
-                    updateTeamComboBox();
-                }
+                masterData.addWindowListener(new WindowListener() {
+                    @Override
+                    public void windowOpened(WindowEvent e) {}
+                    @Override
+                    public void windowClosing(WindowEvent e) {}
+                    @Override
+                    public void windowClosed(WindowEvent e) {}
+                    @Override
+                    public void windowIconified(WindowEvent e) {}
+                    @Override
+                    public void windowDeiconified(WindowEvent e) {}
+                    @Override
+                    public void windowActivated(WindowEvent e) {}
+                    @Override
+                    public void windowDeactivated(WindowEvent e) {
+                        updateTeamComboBox();
+                    }
+                });
             }
         });
         deleteBtnDepartment.addActionListener(new ActionListener() {
@@ -333,7 +439,6 @@ public class Overview extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dataHandler.removeDepartment(departmentComboBox.getSelectedIndex());
                 dataHandler.addLog("deleted Department: " + departmentComboBox.getSelectedItem().toString());
-
                 updateDepartmentComboBox();
             }
         });
@@ -342,7 +447,6 @@ public class Overview extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dataHandler.removeFunction(functionComboBox.getSelectedIndex());
                 dataHandler.addLog("deleted Function: " + functionComboBox.getSelectedItem().toString());
-
                 updateFunctionComboBox();
             }
         });
@@ -351,8 +455,44 @@ public class Overview extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dataHandler.removeTeam(teamCombobox.getSelectedIndex());
                 dataHandler.addLog("deleted Team: " + teamCombobox.getSelectedItem().toString());
-
                 updateTeamComboBox();
+            }
+        });
+
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String permission = "person";
+                if (adminCheckbox.isSelected()) {
+                    permission = "admin";
+                } else if (hrPersonCheckbox.isSelected()) {
+                    permission = "hrPerson";
+                }
+                long[] array = new long[1];
+                array[0] = teamCombobox.getSelectedIndex();
+
+                dataHandler.addPerson(
+                        firstNameTextField.getText(),
+                        lastNameTextField.getText(),
+                        firstNameTextField.getText(),
+                        permission,
+                        departmentComboBox.getSelectedIndex(),
+                        functionComboBox.getSelectedIndex(),
+                        array
+                );
+
+                dataHandler.addLog("created person with username " + firstNameTextField.getText() + "." + lastNameTextField.getText());
+
+                firstNameTextField.setText("");
+                lastNameTextField.setText("");
+                adminCheckbox.setSelected(false);
+                hrPersonCheckbox.setSelected(false);
+                departmentComboBox.setSelectedItem(0);
+                functionComboBox.setSelectedItem(0);
+                teamCombobox.setSelectedItem(0);
+
+                updateTableData();
+
             }
         });
 
@@ -365,6 +505,7 @@ public class Overview extends JFrame {
         }
         DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(department);
         departmentComboBox.setModel(comboModel);
+        logTextArea.setText(dataHandler.getLog());
     }
 
     public void updateFunctionComboBox() {
@@ -374,6 +515,7 @@ public class Overview extends JFrame {
         }
         DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(functions);
         functionComboBox.setModel(comboModel);
+        logTextArea.setText(dataHandler.getLog());
     }
 
     public void updateTeamComboBox() {
@@ -383,6 +525,12 @@ public class Overview extends JFrame {
         }
         DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(teams);
         teamCombobox.setModel(comboModel);
+        logTextArea.setText(dataHandler.getLog());
+    }
+
+    public void updateTableData() {
+        logTextArea.setText(dataHandler.getLog());
+        // TODO update the data in the table
     }
 
 

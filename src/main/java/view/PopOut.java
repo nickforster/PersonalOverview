@@ -4,16 +4,18 @@ import model.DataHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PopOut extends JFrame {
     JLabel nameLabel = new JLabel();
     JLabel functionLabel = new JLabel("Funktion: ");
-    JLabel departmentLabel = new JLabel("Abteilung: " );
+    JLabel departmentLabel = new JLabel("Abteilung: ");
     JLabel teamLabel = new JLabel("Teams: ");
     JLabel permissonLabel = new JLabel("Berechtigung: ");
     JLabel hrPersonLabel = new JLabel("HR-Person: ");
     JLabel adminLabel = new JLabel("Admin: ");
-    JPanel labelPanel = new JPanel(new GridLayout(7,1));
+    JPanel labelPanel = new JPanel(new GridLayout(7, 1));
 
     JLabel lastNameLabel = new JLabel("Nachname: ");
     JTextField firstnameTextfield = new JTextField(20);
@@ -25,94 +27,127 @@ public class PopOut extends JFrame {
     JButton deleteBtn = new JButton("Löschen");
     JCheckBox hrPersonCheckBox = new JCheckBox();
     JCheckBox adminCheckBox = new JCheckBox();
-    JPanel inputPanel = new JPanel(new GridLayout(7,1));
+    JPanel inputPanel = new JPanel(new GridLayout(7, 1));
     JPanel btnPanel = new JPanel(new BorderLayout());
     DataHandler dataHandler = new DataHandler();
-     public PopOut(String firstName, String lastName, String function, String department, String team, String permission, int state){
-         setTitle(firstName + " " + lastName);
-         setSize(400,200);
-         setResizable(false);
 
-         if(state == 0){
-             nameLabel.setText(firstName + " " + lastName);
-             nameLabel.setFont(new Font("Calibri",Font.BOLD,50));
-             functionLabel.setText(functionLabel.getText() + function);
-             departmentLabel.setText(departmentLabel.getText() + department);
-             teamLabel.setText(teamLabel.getText() + team);
-             permissonLabel.setText(permissonLabel.getText() + permission);
+    public PopOut(String firstName, String lastName, String function, String department, String team, String permission, int state, int selectedRow) {
+        setTitle(firstName + " " + lastName);
+        setSize(400, 200);
+        setResizable(false);
 
-             labelPanel.add(functionLabel);
-             labelPanel.add(departmentLabel);
-             labelPanel.add(teamLabel);
-             labelPanel.add(permissonLabel);
+        if (state == 0) {
+            nameLabel.setText(firstName + " " + lastName);
+            nameLabel.setFont(new Font("Calibri", Font.BOLD, 50));
+            functionLabel.setText(functionLabel.getText() + function);
+            departmentLabel.setText(departmentLabel.getText() + department);
+            teamLabel.setText(teamLabel.getText() + team);
+            permissonLabel.setText(permissonLabel.getText() + permission);
 
-             getContentPane().add(nameLabel,BorderLayout.NORTH);
-             getContentPane().add(labelPanel,BorderLayout.WEST);
-         }
-         else if ((state == 1) || (state == 2)) {
-             nameLabel.setText("Vorname: ");
-             labelPanel.add(nameLabel);
-             labelPanel.add(lastNameLabel);
-             labelPanel.add(functionLabel);
-             labelPanel.add(departmentLabel);
-             labelPanel.add(teamLabel);
+            labelPanel.add(functionLabel);
+            labelPanel.add(departmentLabel);
+            labelPanel.add(teamLabel);
+            labelPanel.add(permissonLabel);
 
-             firstnameTextfield.setText(firstName);
-             inputPanel.add(firstnameTextfield);
-             lastnameTextfield.setText(lastName);
-             inputPanel.add(lastnameTextfield);
+            getContentPane().add(nameLabel, BorderLayout.NORTH);
+            getContentPane().add(labelPanel, BorderLayout.WEST);
+        } else if ((state == 1) || (state == 2)) {
+            nameLabel.setText("Vorname: ");
+            labelPanel.add(nameLabel);
+            labelPanel.add(lastNameLabel);
+            labelPanel.add(functionLabel);
+            labelPanel.add(departmentLabel);
+            labelPanel.add(teamLabel);
 
-             String[] functions = new String[dataHandler.getFunctions().size()];
-             for (int i = 0; i < dataHandler.getFunctions().size(); i++) {
-                 functions[i] = dataHandler.getFunctions().get(i).getDesignation();
-             }
-             functionComboBox =  new JComboBox(functions);
-             functionComboBox.setSelectedItem(function);
-             inputPanel.add(functionComboBox);
+            firstnameTextfield.setText(firstName);
+            inputPanel.add(firstnameTextfield);
+            lastnameTextfield.setText(lastName);
+            inputPanel.add(lastnameTextfield);
 
-             String[] departments = new String[dataHandler.getDepartments().size()];
-             for (int i = 0; i < dataHandler.getDepartments().size(); i++) {
-                 departments[i] = dataHandler.getDepartments().get(i).getDesignation();
-             }
-             departmentComboBox = new JComboBox(departments);
-             departmentComboBox.setSelectedItem(department);
-             inputPanel.add(departmentComboBox);
+            String[] functions = new String[dataHandler.getFunctions().size()];
+            for (int i = 0; i < dataHandler.getFunctions().size(); i++) {
+                functions[i] = dataHandler.getFunctions().get(i).getDesignation();
+            }
+            functionComboBox = new JComboBox(functions);
+            functionComboBox.setSelectedItem(function);
+            inputPanel.add(functionComboBox);
 
-             String[] teams = new String[dataHandler.getTeams().size()];
-             for (int i = 0; i < dataHandler.getTeams().size(); i++) {
-                 teams[i] = dataHandler.getTeams().get(i).getDesignation();
-             }
-             teamComboBox = new JComboBox(teams);
-             teamComboBox.setSelectedItem(team);
-             inputPanel.add(teamComboBox);
+            String[] departments = new String[dataHandler.getDepartments().size()];
+            for (int i = 0; i < dataHandler.getDepartments().size(); i++) {
+                departments[i] = dataHandler.getDepartments().get(i).getDesignation();
+            }
+            departmentComboBox = new JComboBox(departments);
+            departmentComboBox.setSelectedItem(department);
+            inputPanel.add(departmentComboBox);
 
-             if(state == 2){
-                 labelPanel.add(hrPersonLabel);
-                 labelPanel.add(adminLabel);
+            String[] teams = new String[dataHandler.getTeams().size()];
+            for (int i = 0; i < dataHandler.getTeams().size(); i++) {
+                teams[i] = dataHandler.getTeams().get(i).getDesignation();
+            }
+            teamComboBox = new JComboBox(teams);
+            teamComboBox.setSelectedItem(team);
+            inputPanel.add(teamComboBox);
 
-
-                 if(permission.equals("admin")){
-                     adminCheckBox.setSelected(true);
-                 }
-                 if(permission.equals("hrPerson")){
-                     hrPersonCheckBox.setSelected(true);
-                 }
-
-                 inputPanel.add(hrPersonCheckBox);
-                 inputPanel.add(adminCheckBox);
-             }
-
-             btnPanel.add(saveBtn,BorderLayout.WEST);
-             btnPanel.add(deleteBtn,BorderLayout.EAST);
-
-             getContentPane().add(labelPanel,BorderLayout.WEST);
-             getContentPane().add(inputPanel,BorderLayout.CENTER);
-             getContentPane().add(btnPanel,BorderLayout.SOUTH);
-
-         }
-         setVisible(true);
+            if (state == 2) {
+                labelPanel.add(hrPersonLabel);
+                labelPanel.add(adminLabel);
 
 
-     }
+                if (permission.equals("admin")) {
+                    adminCheckBox.setSelected(true);
+                }
+                if (permission.equals("hrPerson")) {
+                    hrPersonCheckBox.setSelected(true);
+                }
 
+                inputPanel.add(hrPersonCheckBox);
+                inputPanel.add(adminCheckBox);
+            }
+
+            btnPanel.add(saveBtn, BorderLayout.WEST);
+            btnPanel.add(deleteBtn, BorderLayout.EAST);
+
+            getContentPane().add(labelPanel, BorderLayout.WEST);
+            getContentPane().add(inputPanel, BorderLayout.CENTER);
+            getContentPane().add(btnPanel, BorderLayout.SOUTH);
+
+        }
+        setVisible(true);
+
+        saveBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String permission = "person";
+                if (adminCheckBox.isSelected()){
+                    permission = "admin";
+                } else if (hrPersonCheckBox.isSelected()) {
+                    permission = "hrPerson";
+                }
+                long[] array = new long[1];
+                array[0] = teamComboBox.getSelectedIndex();
+
+                dataHandler.editPerson(selectedRow,
+                        firstnameTextfield.getText(),
+                        lastnameTextfield.getText(),
+                        DataHandler.getPersons().get(selectedRow).getPassword(),
+                        permission,
+                        (long) functionComboBox.getSelectedIndex(),
+                        (long) departmentComboBox.getSelectedIndex(),
+                        array
+                        );
+                setVisible(false);
+
+                dataHandler.addLog("edited person to username " + firstnameTextfield.getText() + "." + lastnameTextfield.getText());
+            }
+        });
+
+        deleteBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataHandler.addLog("deleted person with username " + DataHandler.getPersons().get(selectedRow).getFirstLastName());
+                dataHandler.removePerson(selectedRow);
+                setVisible(false);
+            }
+        });
+    }
 }
