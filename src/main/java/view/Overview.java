@@ -75,6 +75,9 @@ public class Overview extends JFrame {
 
     DataHandler dataHandler = new DataHandler();
 
+    public Overview() {
+    }
+
     public Overview(int state) {
         int personCnt = dataHandler.getPersons().size();
         System.out.println(personCnt);
@@ -239,7 +242,7 @@ public class Overview extends JFrame {
                 masterDatePanel.add(inputPanel, BorderLayout.NORTH);
 
                 tabbedPane.addTab("Log", logPanel);
-                logTextArea.setText("Logs"); //TO:DO Read Textfile
+                logTextArea.setText(dataHandler.getLog()); // TODO update the content
                 logTextArea.setEditable(false);
                 logPanel.add(logTextArea);
             }
@@ -269,40 +272,117 @@ public class Overview extends JFrame {
         addBtnDepartment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Department");
+                MasterData masterData = new MasterData("Department");
+                if (!masterData.isActive()) {
+                    updateDepartmentComboBox();
+                }
             }
         });
         addBtnFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Function");
+                MasterData masterData = new MasterData("Function");
+
+                if (!masterData.isActive()) {
+                    updateFunctionComboBox();
+                }
             }
         });
         addBtnTeam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Team");
+                MasterData masterData = new MasterData("Team");
+
+                if (!masterData.isActive()) {
+                    updateTeamComboBox();
+                }
             }
         });
         editBtnDepartment.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Department", departmentComboBox.getSelectedItem().toString());
+                MasterData masterData = new MasterData("Department", departmentComboBox.getSelectedItem().toString(), departmentComboBox.getSelectedIndex());
+
+                if (!masterData.isActive()) {
+                    updateDepartmentComboBox();
+                }
             }
         });
         editBtnFunction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Function", functionComboBox.getSelectedItem().toString());
+                MasterData masterData = new MasterData("Function", functionComboBox.getSelectedItem().toString(), functionComboBox.getSelectedIndex());
+
+                if (!masterData.isActive()) {
+                    updateFunctionComboBox();
+                }
             }
         });
         editBtnTeam.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new MasterData("Department", teamCombobox.getSelectedItem().toString());
+                MasterData masterData = new MasterData("Team", teamCombobox.getSelectedItem().toString(), teamCombobox.getSelectedIndex());
+
+                if (!masterData.isActive()) {
+                    updateTeamComboBox();
+                }
+            }
+        });
+        deleteBtnDepartment.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataHandler.removeDepartment(departmentComboBox.getSelectedIndex());
+                dataHandler.addLog("deleted Department: " + departmentComboBox.getSelectedItem().toString());
+
+                updateDepartmentComboBox();
+            }
+        });
+        deleteBtnFunction.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataHandler.removeFunction(functionComboBox.getSelectedIndex());
+                dataHandler.addLog("deleted Function: " + functionComboBox.getSelectedItem().toString());
+
+                updateFunctionComboBox();
+            }
+        });
+        deleteBtnTeam.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataHandler.removeTeam(teamCombobox.getSelectedIndex());
+                dataHandler.addLog("deleted Team: " + teamCombobox.getSelectedItem().toString());
+
+                updateTeamComboBox();
             }
         });
 
+    }
+
+    public void updateDepartmentComboBox() {
+        String[] department = new String[dataHandler.getDepartments().size()];
+        for (int i = 0; i < dataHandler.getDepartments().size(); i++) {
+            department[i] = dataHandler.getDepartments().get(i).getDesignation();
+        }
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(department);
+        departmentComboBox.setModel(comboModel);
+    }
+
+    public void updateFunctionComboBox() {
+        String[] functions = new String[dataHandler.getFunctions().size()];
+        for (int i = 0; i < dataHandler.getFunctions().size(); i++) {
+            functions[i] = dataHandler.getFunctions().get(i).getDesignation();
+        }
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(functions);
+        functionComboBox.setModel(comboModel);
+    }
+
+    public void updateTeamComboBox() {
+        String[] teams = new String[dataHandler.getTeams().size()];
+        for (int i = 0; i < dataHandler.getTeams().size(); i++) {
+            teams[i] = dataHandler.getTeams().get(i).getDesignation();
+        }
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>(teams);
+        teamCombobox.setModel(comboModel);
     }
 
 

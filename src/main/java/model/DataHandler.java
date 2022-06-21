@@ -52,7 +52,7 @@ public class DataHandler {
         }
     }
 
-    private void readData() {
+    public void readData() {
         try {
             //Read JSON file of employees
             FileReader readPersons = new FileReader("src/main/java/data/person.json");
@@ -312,6 +312,7 @@ public class DataHandler {
     }
 
     public void readLog() {
+        log = "";
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/data/log.txt"))) {
             String line = br.readLine();
             while (line != null) {
@@ -328,15 +329,18 @@ public class DataHandler {
     }
 
     public void addLog(String newLog) {
-        log += "[" + new Timestamp(System.currentTimeMillis()) + "] " +
-                "<" + currentUser.getFirstLastName() + "> " + newLog;
         try {
-            FileWriter myWriter = new FileWriter("src/main/java/data/log.txt");
-            myWriter.write(log);
+            PrintWriter myWriter = new PrintWriter("src/main/java/data/log.txt");
+            myWriter.print(
+                    getLog() +
+                    "[" + new Timestamp(System.currentTimeMillis()) + "] " +
+                    "<" + currentUser.getFirstLastName() + "> " + newLog
+            );
             myWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        readLog();
     }
 
     public String getLog() {
