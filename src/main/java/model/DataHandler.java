@@ -28,6 +28,9 @@ public class DataHandler {
 
     }
 
+    /**
+     * lists all data
+     */
     private void listData() {
         for (Person person : persons) {
             System.out.println(
@@ -52,6 +55,9 @@ public class DataHandler {
         }
     }
 
+    /**
+     * reads all data from the json files
+     */
     public void readData() {
         try {
             //Read JSON file of employees
@@ -137,14 +143,29 @@ public class DataHandler {
         functions.add(new Function(designation));
     }
 
+    /**
+     * gets the function by the index
+     * @param index
+     * @return function
+     */
     public static Function getFunction(long index) {
         return functions.get((int) index);
     }
 
+    /**
+     * gets the department by the index
+     * @param index
+     * @return department
+     */
     public static Department getDepartment(long index) {
         return departments.get((int) index);
     }
 
+    /**
+     * gets the array of teams by the index
+     * @param index
+     * @return teams[]
+     */
     public static Team[] getTeams(long[] index) {
         Team[] returnTeam = new Team[index.length];
         for (int i = 0; i < index.length; i++) {
@@ -153,6 +174,9 @@ public class DataHandler {
         return returnTeam;
     }
 
+    /**
+     * writes the departments in the json file
+     */
     public void writeDepartment() {
         JSONArray jsonArray = new JSONArray();
 
@@ -172,21 +196,37 @@ public class DataHandler {
         }
     }
 
+    /**
+     * adds the department to the list
+     * @param designation
+     */
     public void addDepartment(String designation) {
         departments.add(new Department(designation));
         writeDepartment();
     }
 
+    /**
+     * edits the department by index with the given parameters
+     * @param index
+     * @param designation
+     */
     public void editDepartment(int index, String designation) {
         departments.set(index, new Department(designation));
         writeDepartment();
     }
 
+    /**
+     * removes a department by the index
+     * @param index
+     */
     public void removeDepartment(int index) {
         departments.remove(index);
         writeDepartment();
     }
 
+    /**
+     * writes a function into the json file
+     */
     public void writeFunction() {
         JSONArray jsonArray = new JSONArray();
 
@@ -206,21 +246,37 @@ public class DataHandler {
         }
     }
 
+    /**
+     * adds a function to the functions list
+     * @param designation
+     */
     public void addFunction(String designation) {
         functions.add(new Function(designation));
         writeFunction();
     }
 
+    /**
+     * edits a function by index with the given parameters
+     * @param index
+     * @param designation
+     */
     public void editFunction(int index, String designation) {
         functions.set(index, new Function(designation));
         writeFunction();
     }
 
+    /**
+     * removes a function by index
+     * @param index
+     */
     public void removeFunction(int index) {
         functions.remove(index);
         writeFunction();
     }
 
+    /**
+     * writes the teams into the json file
+     */
     public void writeTeam() {
         JSONArray jsonArray = new JSONArray();
 
@@ -240,21 +296,37 @@ public class DataHandler {
         }
     }
 
+    /**
+     * adds a team to the teams list
+     * @param designation
+     */
     public void addTeam(String designation) {
         teams.add(new Team(designation));
         writeTeam();
     }
 
+    /**
+     * edits a team by index with the given parameters
+     * @param index
+     * @param designation
+     */
     public void editTeam(int index, String designation) {
         teams.set(index, new Team(designation));
         writeTeam();
     }
 
+    /**
+     * removes a team by index
+     * @param index
+     */
     public void removeTeam(int index) {
         teams.remove(index);
         writeTeam();
     }
 
+    /**
+     * writes the persons into the json file
+     */
     public void writePerson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -284,21 +356,52 @@ public class DataHandler {
         }
     }
 
+    /**
+     * adds a person to the persons list
+     * @param firstName
+     * @param lastName
+     * @param password
+     * @param permission
+     * @param departmentId
+     * @param functionId
+     * @param teamsIds
+     */
     public void addPerson(String firstName, String lastName, String password, String permission, long departmentId, long functionId, long[] teamsIds) {
         persons.add(new Person(firstName, lastName, password, permission, functionId, departmentId, teamsIds));
         writePerson();
     }
 
+    /**
+     * edits a person in the list by index with the given parameters
+     * @param index
+     * @param firstName
+     * @param lastName
+     * @param password
+     * @param permission
+     * @param departmentId
+     * @param functionId
+     * @param teamsIds
+     */
     public void editPerson(int index, String firstName, String lastName, String password, String permission, long departmentId, long functionId, long[] teamsIds) {
         persons.set(index, new Person(firstName, lastName, password, permission, functionId, departmentId, teamsIds));
         writePerson();
     }
 
+    /**
+     * removes a person by index
+     * @param index
+     */
     public void removePerson(int index) {
         persons.remove(index);
         writePerson();
     }
 
+    /**
+     * tests the login of a person by username and password
+     * @param firstLastName
+     * @param password
+     * @return the user or null if username/password is invalid
+     */
     public static Person login(String firstLastName, String password) {
         Person returnPerson = null;
         for (Person person : persons) {
@@ -311,6 +414,9 @@ public class DataHandler {
         return returnPerson;
     }
 
+    /**
+     * reads the log out of the log.txt file
+     */
     public void readLog() {
         log = "";
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/java/data/log.txt"))) {
@@ -328,6 +434,10 @@ public class DataHandler {
         }
     }
 
+    /**
+     * adds a log to the log file
+     * @param newLog
+     */
     public void addLog(String newLog) {
         try {
             PrintWriter myWriter = new PrintWriter("src/main/java/data/log.txt");
@@ -343,22 +453,42 @@ public class DataHandler {
         readLog();
     }
 
+    /**
+     * gets the current log
+     * @return log
+     */
     public String getLog() {
         return log;
     }
 
+    /**
+     * gets the persons list
+     * @return persons list
+     */
     public static List<Person> getPersons() {
         return persons;
     }
 
+    /**
+     * gets the departments list
+     * @return departments
+     */
     public static List<Department> getDepartments() {
         return departments;
     }
 
+    /**
+     * gets the teams list
+     * @return teams
+     */
     public static List<Team> getTeams() {
         return teams;
     }
 
+    /**
+     * gets the functions list
+     * @return functions
+     */
     public static List<Function> getFunctions() {
         return functions;
     }
